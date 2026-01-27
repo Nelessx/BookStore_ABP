@@ -19,12 +19,14 @@ export const APP_ROUTE_PROVIDER = [
         iconClass: 'fas fa-book',
         order: 2,
         layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Books',
       },
       {
         path: '/books',
         name: '::Menu:Books',
         parentName: '::Menu:BookStore',
         layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Books',
       },
     ]);
   }),
