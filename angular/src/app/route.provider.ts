@@ -19,7 +19,7 @@ export const APP_ROUTE_PROVIDER = [
         iconClass: 'fas fa-book',
         order: 2,
         layout: eLayoutType.application,
-        requiredPolicy: 'BookStore.Books',
+        requiredPolicy: 'BookStore.Books || BookStore.Authors',
       },
       {
         path: '/books',
@@ -28,6 +28,14 @@ export const APP_ROUTE_PROVIDER = [
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.Books',
       },
+      {
+        path: '/authors',
+        name: '::Menu:Authors',
+        parentName: '::Menu:BookStore',
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Authors',
+      }
+
     ]);
   }),
 ];
