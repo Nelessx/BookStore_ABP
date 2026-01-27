@@ -24,5 +24,8 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('@abp/ng.setting-management').then(c => c.createRoutes()),
   },
   // ADD THIS NEW ROUTE FOR BOOKS
-  { path: 'books', loadChildren: () => import('./book/book.module').then(m => m.BookModule) }, 
+  {
+    path: 'books',
+    loadChildren: () => import('./book/book.module').then(m => m.BookModule)
+  }, 
 ];

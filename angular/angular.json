@@ -47,6 +47,11 @@
             ],
             "styles": [
               {
+                "input": "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "inject": true,
+                "bundleName": "bootstrap"
+              },  
+              {
                 "input": "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
                 "inject": true,
                 "bundleName": "fontawesome-all.min"

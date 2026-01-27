@@ -3,12 +3,8 @@ import { inject, provideAppInitializer } from '@angular/core';
 
 export const APP_ROUTE_PROVIDER = [
   provideAppInitializer(() => {
-    configureRoutes
-  }),
-];
+    const routes = inject(RoutesService);
 
-function configureRoutes(routes: RoutesService) {
-  return () => {
     routes.add([
       {
         path: '/',
@@ -31,6 +27,5 @@ function configureRoutes(routes: RoutesService) {
         layout: eLayoutType.application,
       },
     ]);
-  };
-}
-
+  }),
+];
