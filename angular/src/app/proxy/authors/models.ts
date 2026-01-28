@@ -1,6 +1,6 @@
 import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
-export interface AuthorDto extends EntityDto<string | undefined> {
+export interface AuthorDto extends EntityDto<string> {
   name?: string;
   birthDate?: string;
   shortBio?: string;

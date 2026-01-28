@@ -5,6 +5,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateNativeAdapter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+import { AuthorLookupDto } from '../proxy/books';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   standalone: false,
@@ -22,6 +26,8 @@ export class BookComponent implements OnInit {
 
   form: FormGroup;
 
+  authors$: Observable<AuthorLookupDto[]>;
+
   bookTypes = bookTypeOptions;
 
   isModalOpen = false;
@@ -33,6 +39,13 @@ export class BookComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly modalService = inject(NgbModal);
   private readonly confirmation = inject(ConfirmationService); // inject the ConfirmationService
+
+  constructor() {
+    this.authors$ = this.bookService
+      .getAuthorLookup()
+      .pipe(map((r) => r.items));
+  }
+
 
   ngOnInit() {
     const bookStreamCreator = (query) => this.bookService.getList(query);
@@ -68,22 +81,34 @@ export class BookComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      type: [null, Validators.required],
-      publishDate: [null, Validators.required],
-      price: [null, Validators.required],
+      authorId: [this.selectedBook.authorId || null, Validators.required],
+      name: [this.selectedBook.name || null, Validators.required],
+      type: [this.selectedBook.type || null, Validators.required],
+      publishDate: [
+        this.selectedBook.publishDate
+          ? new Date(this.selectedBook.publishDate)
+          : null,
+        Validators.required,
+      ],
+      price: [this.selectedBook.price || null, Validators.required],
     });
   }
+
 
   save() {
     if (this.form.invalid) {
       return;
     }
 
-    this.bookService.create(this.form.value).subscribe(() => {
-      this.modalService.dismissAll();
+    const request = this.selectedBook.id
+      ? this.bookService.update(this.selectedBook.id, this.form.value)
+      : this.bookService.create(this.form.value);
+
+    request.subscribe(() => {
+      this.modalService.dismissAll(); // keep your modal logic
       this.form.reset();
       this.list.get();
     });
   }
+
 }
