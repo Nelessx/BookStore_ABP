@@ -41,8 +41,23 @@
     "Authors": "Authors",
     "AuthorDeletionConfirmationMessage": "Are you sure to delete the author '{0}'?",
     "BirthDate": "Birth date",
-    "NewAuthor": "New author"
-      
+    "NewAuthor": "New author",
+    "Permission:Customers": "Customers",
+    "Permission:Customers.Create": "Create Customer",
+    "Permission:Customers.Edit": "Edit Customer",
+    "Permission:Customers.Delete": "Delete Customer",
+    "Menu:Customers": "Customers",
+    "Menu:Orders": "Orders",
+    "Permission:Orders": "Orders",
+    "Permission:Orders.Create": "Create Order",
+    "Permission:Orders.Edit": "Edit Order",
+    "Permission:Orders.Delete": "Delete Order",
+    "Menu:OrderItems": "Order Items",
+    "Permission:OrderItems": "Order Items",
+    "Permission:OrderItems.Create": "Create Order Item",
+    "Permission:OrderItems.Edit": "Edit Order Item",
+    "Permission:OrderItems.Delete": "Delete Order Item"
+
 
 
   }

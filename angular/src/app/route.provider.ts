@@ -25,6 +25,7 @@ export const APP_ROUTE_PROVIDER = [
         path: '/books',
         name: '::Menu:Books',
         parentName: '::Menu:BookStore',
+        iconClass: 'fas fa-book',
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.Books',
       },
@@ -32,8 +33,33 @@ export const APP_ROUTE_PROVIDER = [
         path: '/authors',
         name: '::Menu:Authors',
         parentName: '::Menu:BookStore',
+        iconClass: 'fas fa-user-edit',
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.Authors',
+      },
+      {
+        path: '/customers',
+        name: '::Menu:Customers',
+        parentName: '::Menu:BookStore',
+        iconClass: 'fas fa-users',
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Customers',
+      },
+      {
+        path: '/orders',
+        name: '::Menu:Orders',
+        parentName: '::Menu:BookStore',
+        iconClass: 'fas fa-shopping-cart',
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Orders',
+      },
+      {
+        path: '/order-items',
+        name: '::Menu:OrderItems',
+        parentName: '::Menu:BookStore',
+        iconClass: 'fas fa-list',
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.OrderItems',
       }
 
     ]);

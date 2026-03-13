@@ -7,7 +7,7 @@ namespace Acme.BookStore.Permissions;
 
 public class BookStorePermissionDefinitionProvider : PermissionDefinitionProvider
 {
-    public override void Define(IPermissionDefinitionContext context)
+    public override void Define(IPermissionDefinitionContext context)// this is where all premissions are registered.
     {
         var bookStoreGroup = context.AddGroup(BookStorePermissions.GroupName, L("Permission:BookStore"));
 
@@ -31,7 +31,74 @@ public class BookStorePermissionDefinitionProvider : PermissionDefinitionProvide
         authorsPermission.AddChild(
             BookStorePermissions.Authors.Delete, L("Permission:Authors.Delete"));
 
+        //Customers permissions
+        var customersPermission = bookStoreGroup.AddPermission(
+    BookStorePermissions.Customers.Default,
+    L("Permission:Customers")
+);
+
+        customersPermission.AddChild(
+            BookStorePermissions.Customers.Create,
+            L("Permission:Customers.Create")
+        );
+
+        customersPermission.AddChild(
+            BookStorePermissions.Customers.Edit,
+            L("Permission:Customers.Edit")
+        );
+
+        customersPermission.AddChild(
+            BookStorePermissions.Customers.Delete,
+            L("Permission:Customers.Delete")
+        );
+
+        var ordersPermission = bookStoreGroup.AddPermission(
+    BookStorePermissions.Orders.Default,
+    L("Permission:Orders")
+);
+
+        ordersPermission.AddChild(
+            BookStorePermissions.Orders.Create,
+            L("Permission:Orders.Create")
+        );
+
+        ordersPermission.AddChild(
+            BookStorePermissions.Orders.Edit,
+            L("Permission:Orders.Edit")
+        );
+
+        ordersPermission.AddChild(
+            BookStorePermissions.Orders.Delete,
+            L("Permission:Orders.Delete")
+        );
+
+
+        var orderItemsPermission = bookStoreGroup.AddPermission(
+    BookStorePermissions.OrderItems.Default,
+    L("Permission:OrderItems")
+);
+
+        orderItemsPermission.AddChild(
+            BookStorePermissions.OrderItems.Create,
+            L("Permission:OrderItems.Create")
+        );
+
+        orderItemsPermission.AddChild(
+            BookStorePermissions.OrderItems.Edit,
+            L("Permission:OrderItems.Edit")
+        );
+
+        orderItemsPermission.AddChild(
+            BookStorePermissions.OrderItems.Delete,
+            L("Permission:OrderItems.Delete")
+        );
+
     }
+
+
+
+
+
 
     private static LocalizableString L(string name)
     {

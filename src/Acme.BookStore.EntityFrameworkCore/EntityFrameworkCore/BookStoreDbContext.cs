@@ -1,5 +1,8 @@
 using Acme.BookStore.Authors;
 using Acme.BookStore.Books;
+using Acme.BookStore.Customers;
+using Acme.BookStore.OrderItems;
+using Acme.BookStore.Orders;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -17,6 +20,7 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
+
 namespace Acme.BookStore.EntityFrameworkCore;
 
 [ReplaceDbContext(typeof(IIdentityDbContext))]
@@ -30,6 +34,9 @@ public class BookStoreDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
 
 
 
@@ -109,6 +116,43 @@ public class BookStoreDbContext :
                 .HasMaxLength(AuthorConsts.MaxNameLength);
 
             b.HasIndex(x => x.Name);
+        });
+
+        builder.Entity<Customer>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Customers", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            b.Property(x => x.Number)
+                .IsRequired()
+                .HasMaxLength(32);
+
+            b.HasIndex(x => x.Number);
+            
+        });
+
+        builder.Entity<Order>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Orders", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.TotalAmount).IsRequired();
+        });
+
+        builder.Entity<OrderItem>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "OrderItems", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).IsRequired();
+            b.Property(x => x.Price).IsRequired();
+
+            b.HasOne<Order>().WithMany().HasForeignKey(x => x.OrderId).IsRequired();
+            b.HasOne<Book>().WithMany().HasForeignKey(x => x.BookId).IsRequired();
         });
 
     }

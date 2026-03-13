@@ -6,85 +6,113 @@
           {{ '::Menu:Books' | abpLocalization }}
         </h5>
       </div>
+
       <div class="text-end col col-md-6">
         <div class="text-lg-end pt-2">
-          <!-- Add the abpPermission directive -->
-          <button *abpPermission="'BookStore.Books.Create'" id="create" class="btn btn-primary" type="button"
-            (click)="createBook()">
+          <button
+            *abpPermission="'BookStore.Books.Create'"
+            id="create"
+            class="btn btn-primary"
+            type="button"
+            (click)="createBook()"
+          >
             <i class="fa fa-plus me-1"></i>
             <span>{{ '::NewBook' | abpLocalization }}</span>
           </button>
-
         </div>
       </div>
     </div>
   </div>
-  <div class="card-body">
 
-    <ngx-datatable class="ngx-datatable" [rows]="book.items" [count]="book.totalCount" [columnMode]="'force'"
-      [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [externalSorting]="true">
-      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [width]="100" [sortable]="false">
+  <div class="card-body">
+    <ngx-datatable
+      class="ngx-datatable"
+      [rows]="book.items"
+      [count]="book.totalCount"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [externalPaging]="true"
+      [externalSorting]="true"
+    >
+      <ngx-datatable-column
+        [name]="'::Actions' | abpLocalization"
+        [width]="100"
+        [sortable]="false"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              ngbDropdownToggle>
+            <button
+              class="btn btn-primary btn-sm dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              ngbDropdownToggle
+            >
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
-            <div ngbDropdownMenu>
 
-              <button *abpPermission="'BookStore.Books.Edit'" ngbDropdownItem (click)="editBook(row.id)">
+            <div ngbDropdownMenu>
+              <button
+                *abpPermission="'BookStore.Books.Edit'"
+                ngbDropdownItem
+                (click)="editBook(row.id)"
+              >
                 {{ '::Edit' | abpLocalization }}
               </button>
 
-              <button *abpPermission="'BookStore.Books.Delete'" ngbDropdownItem (click)="delete(row.id)">
+              <button
+                *abpPermission="'BookStore.Books.Delete'"
+                ngbDropdownItem
+                (click)="delete(row.id)"
+              >
                 {{ '::Delete' | abpLocalization }}
               </button>
-
-
             </div>
           </div>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name">
-      </ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Author' | abpLocalization" prop="authorName"
-        [sortable]="false"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
+
+      <ngx-datatable-column
+        [name]="'::Author' | abpLocalization"
+        prop="authorName"
+        [sortable]="false"
+      ></ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="type">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ '::Enum:BookType.' + row.type | abpLocalization }}
         </ng-template>
       </ngx-datatable-column>
+
       <ngx-datatable-column [name]="'::PublishDate' | abpLocalization" prop="publishDate">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.publishDate | date }}
         </ng-template>
       </ngx-datatable-column>
+
       <ngx-datatable-column [name]="'::Price' | abpLocalization" prop="price">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.price | currency }}
         </ng-template>
       </ngx-datatable-column>
-
     </ngx-datatable>
   </div>
 </div>
 
-<!-- Create Book Modal -->
+<!-- Create/Edit Book Modal -->
 <ng-template #createModal let-modal>
-  <ng-template #abpHeader>
-    <h3>{{ (selectedBook.id ? '::Edit' : '::NewBook') | abpLocalization }}</h3>
-  </ng-template>
-
   <div class="modal-header">
-    <h4 class="modal-title">{{ '::NewBook' | abpLocalization }}</h4>
+    <h4 class="modal-title">
+      {{ (selectedBook.id ? '::Edit' : '::NewBook') | abpLocalization }}
+    </h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
 
   <div class="modal-body">
     <form [formGroup]="form" (ngSubmit)="save()">
-
       <div class="form-group">
         <label for="author-id">Author</label><span> * </span>
         <select class="form-control" id="author-id" formControlName="authorId">
@@ -117,8 +145,14 @@
 
       <div class="mt-2">
         <label>Publish date</label><span> * </span>
-        <input #datepicker="ngbDatepicker" class="form-control" name="datepicker" formControlName="publishDate"
-          ngbDatepicker (click)="datepicker.toggle()" />
+        <input
+          #datepicker="ngbDatepicker"
+          class="form-control"
+          name="datepicker"
+          formControlName="publishDate"
+          ngbDatepicker
+          (click)="datepicker.toggle()"
+        />
       </div>
     </form>
   </div>

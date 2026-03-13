@@ -28,9 +28,30 @@ export const APP_ROUTES: Routes = [
     path: 'books',
     loadChildren: () => import('./book/book.module').then(m => m.BookModule)
   },
-
+  //route for authors
   {
     path: 'authors',
     loadChildren: () => import('./author/author.module').then(m => m.AuthorModule)
   },
+
+  //route for customers
+  {
+    path: 'customers',
+    loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
+  },
+
+  //route for orders
+  {
+    path: 'orders',
+    loadChildren: () => import('./order/order.module').then(m => m.OrderModule)
+  },
+
+  //route for order items
+{
+  path: 'order-items',
+  loadChildren: () => import('./order-item/order-item.module').then(m => m.OrderItemModule)
+}
+
+
+
 ];

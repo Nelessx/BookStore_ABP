@@ -1,0 +1,81 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col col-md-6">
+        <h5 class="card-title">
+          {{ '::Menu:Customers' | abpLocalization }}
+        </h5>
+      </div>
+
+      <div class="text-end col col-md-6">
+        <button *abpPermission="'BookStore.Customers.Create'" class="btn btn-primary" type="button"
+          (click)="createCustomer()">
+          <i class="fa fa-plus me-1"></i>
+          <span>{{ '::NewCustomer' | abpLocalization }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <ngx-datatable class="ngx-datatable bootstrap" [rows]="customer.items" [count]="customer.totalCount"
+      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [width]="180" [sortable]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button *abpPermission="'BookStore.Customers.Edit'" class="btn btn-sm btn-primary me-1" type="button"
+            (click)="editCustomer(row.id)">
+            Edit
+          </button>
+
+          <button *abpPermission="'BookStore.Customers.Delete'" class="btn btn-sm btn-danger" type="button"
+            (click)="deleteCustomer(row.id)">
+            Delete
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::CustomerName' | abpLocalization" prop="name">
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::CustomerNumber' | abpLocalization" prop="number">
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #createModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">
+      {{
+      selectedCustomer.id
+      ? ('::EditCustomer' | abpLocalization)
+      : ('::NewCustomer' | abpLocalization)
+      }}
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="mb-3">
+        <label class="form-label">{{ '::CustomerName' | abpLocalization }}</label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{{ '::CustomerNumber' | abpLocalization }}</label>
+        <input type="tel" pattern="[0-9]*" inputmode="numeric" id="customer-number" class="form-control"
+          formControlName="number" />
+      </div>
+
+      <div class="text-end">
+        <button type="button" class="btn btn-secondary me-2" (click)="modal.dismiss()">
+          {{ '::Close' | abpLocalization }}
+        </button>
+        <button type="submit" class="btn btn-primary">
+          {{ '::Save' | abpLocalization }}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
