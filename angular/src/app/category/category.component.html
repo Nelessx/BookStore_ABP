@@ -1,0 +1,169 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col col-md-6">
+        <h5 class="card-title">
+          {{ '::Menu:Categories' | abpLocalization }}
+        </h5>
+      </div>
+
+      <div class="text-end col col-md-6">
+        <div class="text-lg-end pt-2">
+          <button
+            *abpPermission="'BookStore.Categories.Create'"
+            class="btn btn-primary"
+            type="button"
+            (click)="createCategory()"
+          >
+            <i class="fa fa-plus me-1"></i>
+            <span>{{ '::NewCategory' | abpLocalization }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <ngx-datatable
+      class="ngx-datatable"
+      [rows]="category.items"
+      [count]="category.totalCount"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [externalPaging]="true"
+      [externalSorting]="true"
+    >
+
+      <ngx-datatable-column
+        [name]="'::Actions' | abpLocalization"
+        [width]="120"
+        [sortable]="false"
+      >
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+
+            <button
+              class="btn btn-primary btn-sm dropdown-toggle"
+              ngbDropdownToggle
+            >
+              <i class="fa fa-cog me-1"></i>
+              {{ '::Actions' | abpLocalization }}
+            </button>
+
+            <div ngbDropdownMenu>
+
+              <button
+                *abpPermission="'BookStore.Categories.Edit'"
+                ngbDropdownItem
+                (click)="editCategory(row.id)"
+              >
+                {{ '::Edit' | abpLocalization }}
+              </button>
+
+              <button
+                *abpPermission="'BookStore.Categories.Delete'"
+                ngbDropdownItem
+                (click)="delete(row.id)"
+              >
+                {{ '::Delete' | abpLocalization }}
+              </button>
+
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column
+        [name]="'::CategoryName' | abpLocalization"
+        prop="name">
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column
+        [name]="'::CategoryDescription' | abpLocalization"
+        prop="description">
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+  </div>
+</div>
+
+
+<ng-template #createModal let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title">
+      {{ selectedCategory.id ? ('::EditCategory' | abpLocalization) : ('::NewCategory' | abpLocalization) }}
+    </h4>
+
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss()">
+    </button>
+  </div>
+
+
+  <div class="modal-body">
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+
+      <div class="form-group">
+        <label for="category-name">
+          {{ '::CategoryName' | abpLocalization }}
+        </label>
+        <span> * </span>
+
+        <input
+          type="text"
+          id="category-name"
+          class="form-control"
+          formControlName="name"
+          autofocus
+        />
+      </div>
+
+
+      <div class="mt-2">
+        <label for="category-description">
+          {{ '::CategoryDescription' | abpLocalization }}
+        </label>
+
+        <textarea
+          id="category-description"
+          class="form-control"
+          formControlName="description">
+        </textarea>
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="modal-footer">
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close()">
+      {{ '::Close' | abpLocalization }}
+    </button>
+
+    <button
+      class="btn btn-primary"
+      (click)="save()"
+      [disabled]="form.invalid">
+
+      <i class="fa fa-check me-1"></i>
+      {{ '::Save' | abpLocalization }}
+
+    </button>
+
+  </div>
+
+</ng-template>

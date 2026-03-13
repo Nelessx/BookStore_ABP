@@ -50,6 +50,12 @@ export const APP_ROUTES: Routes = [
 {
   path: 'order-items',
   loadChildren: () => import('./order-item/order-item.module').then(m => m.OrderItemModule)
+},
+
+//route for categories
+{
+  path: 'categories',
+  loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
 }
 
 

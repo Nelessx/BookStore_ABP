@@ -1,5 +1,6 @@
 using Acme.BookStore.Authors;
 using Acme.BookStore.Books;
+using Acme.BookStore.Categories;
 using Acme.BookStore.Customers;
 using Acme.BookStore.OrderItems;
 using Acme.BookStore.Orders;
@@ -37,6 +38,7 @@ public class BookStoreDbContext :
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
 
 
@@ -153,6 +155,16 @@ public class BookStoreDbContext :
 
             b.HasOne<Order>().WithMany().HasForeignKey(x => x.OrderId).IsRequired();
             b.HasOne<Book>().WithMany().HasForeignKey(x => x.BookId).IsRequired();
+        });
+
+        builder.Entity<Category>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Categories", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(128);
+            b.HasIndex(x => x.Name);
         });
 
     }

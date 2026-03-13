@@ -60,6 +60,14 @@ export const APP_ROUTE_PROVIDER = [
         iconClass: 'fas fa-list',
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.OrderItems',
+      },
+      {
+        path: '/categories',
+        name: '::Menu:Categories',
+        parentName: '::Menu:BookStore',
+        iconClass: 'fas fa-tags',
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Categories',
       }
 
     ]);

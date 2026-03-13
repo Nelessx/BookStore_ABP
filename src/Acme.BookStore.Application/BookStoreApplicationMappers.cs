@@ -1,5 +1,6 @@
 using Acme.BookStore.Authors;
 using Acme.BookStore.Books;
+using Acme.BookStore.Categories;
 using Acme.BookStore.Customers;
 using Acme.BookStore.OrderItems;
 using Acme.BookStore.Orders;
@@ -98,4 +99,20 @@ public partial class CreateUpdateOrderItemDtoToOrderItemMapper : MapperBase<Crea
     public override partial OrderItem Map(CreateUpdateOrderItemDto source);
 
     public override partial void Map(CreateUpdateOrderItemDto source, OrderItem destination);
+}
+
+[Mapper]
+public partial class CategoryToCategoryDtoMapper : MapperBase<Category, CategoryDto>
+{
+    public override partial CategoryDto Map(Category source);
+
+    public override partial void Map(Category source, CategoryDto destination);
+}
+
+[Mapper]
+public partial class CreateUpdateCategoryDtoToCategoryMapper : MapperBase<CreateUpdateCategoryDto, Category>
+{
+    public override partial Category Map(CreateUpdateCategoryDto source);
+
+    public override partial void Map(CreateUpdateCategoryDto source, Category destination);
 }

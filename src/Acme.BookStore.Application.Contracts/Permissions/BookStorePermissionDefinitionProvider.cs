@@ -93,6 +93,26 @@ public class BookStorePermissionDefinitionProvider : PermissionDefinitionProvide
             L("Permission:OrderItems.Delete")
         );
 
+           var categoriesPermission = bookStoreGroup.AddPermission(
+    BookStorePermissions.Categories.Default,
+    L("Permission:Categories")
+);
+        categoriesPermission.AddChild(
+            BookStorePermissions.Categories.Create,
+            L("Permission:Categories.Create")
+        );
+
+        categoriesPermission.AddChild(
+            BookStorePermissions.Categories.Edit,
+            L("Permission:Categories.Edit")
+        );
+
+        categoriesPermission.AddChild(
+            BookStorePermissions.Categories.Delete,
+            L("Permission:Categories.Delete")
+        );
+
+
     }
 
 
